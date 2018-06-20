@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo setup environment...
-docker run -i -t -v `pwd`:/workspace -w /workspace quay.io/snakemake/snakemake:v5.1.4 bash
+docker run -i -t -v `pwd`:/workspace -w /workspace quay.io/snakemake/snakemake bash
 echo obtain data...
 git clone https://bitbucket.org/snakemake/snakemake-tutorial.git
 cd snakemake-tutorial
