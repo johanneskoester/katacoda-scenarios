@@ -14,6 +14,10 @@ The reader (e.g., a collaborator of yours) can at any time download the enclosed
 In this example, please mark the output file `"plots/quals.svg"` for inclusion by replacing it with `report("plots/quals.svg", caption="report/calling.rst")` and adding a file `report/calling.rst`, containing some description of the output file.
 This description will be presented as caption in the resulting report.
 
+To view the report, run
+
+    pushd report.html; python3 -m http.server 80; popd;
+
 ## Threads
 
 The first rule `bwa` can in theory use multiple threads. You can make Snakemake aware of this, such that the information can be used for scheduling.
