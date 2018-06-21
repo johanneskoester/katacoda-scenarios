@@ -1,32 +1,51 @@
-Now, we aggregate over all samples to perform a joint calling of genomic variants.
-First, we define a variable
+Finally, we strive to calculate some exemplary statistics.
+This time, we don't use a shell command, but rather employ Snakemake's ability to integrate with scripting languages like R and Python.
 
-    samples = ["A", "B", "C"]
-
-at the top of the `Snakefile`.
-This serves as a definition of the samples over which we would want to aggregate.
-In real life, you would want to use an external sample sheet or a [config file](http://snakemake.readthedocs.io/en/stable/tutorial/advanced.html#step-2-config-files) for things like this.
-
-For aggregation over many files, Snakemake provides the helper function `expand` (see [the docs](http://snakemake.readthedocs.io/en/stable/tutorial/basics.html#step-5-calling-genomic-variants)).
-Create a rule `call` with input files
-
-* `fa="data/genome.fa"`
-* `bam=expand("mapped/{sample}.sorted.bam", sample=samples)`
-* `bai=expand("mapped/{sample}.sorted.bam.bai", sample=samples)`,
-
-output file
+First, we create a rule `stats` with input file
 
 * `"calls/all.vcf"`
 
-and shell command
+and output file
 
-    samtools mpileup -g -f {input.fa} {input.bam} | bcftools call -mv - > {output}
+* `"plots/quals.svg"`.
 
-Further, define a new conda environment file with the following content:
+Instead of a shell command, we write
+
+    script:
+        "scripts/plot-quals.py"
+
+and create the corresponding script and its containing folder in our working directory with
+
+    mkdir scripts
+    touch scripts/plot-quals.py
+
+
+We open the script in the editor and add the following content
+
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    from pysam import VariantFile
+
+    quals = [record.qual for record in VariantFile(snakemake.input[0])]
+    plt.hist(quals)
+
+    plt.savefig(snakemake.output[0])
+
+
+As you can see, instead of writing a command line parser for passing parameters like input and output files, you have direct access to the properties of the rule via a magic `snakemake` object, that Snakemake automatically inserts into the script before executing the rule.
+
+Finally, we have to define a conda environment for the rule, say `envs/stats.yaml`, that provides the required Python packages to execute the script:
 
     channels:
       - bioconda
       - conda-forge
     dependencies:
-      - bcftools =1.7
-      - samtools =1.7
+      - pysam =0.14
+      - matplotlib =2.2
+      - python =3.6
+
+
+Make sure to test your workflow with
+
+    snakemake --use-conda plots/quals.svg

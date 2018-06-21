@@ -10,35 +10,38 @@
       },
       {
         "title": "Step 2",
-        "text": "step2.md"
+        "text": "step2.md",
+        "answer": "step2-answer.md"
       },
       {
         "title": "Step 3",
-        "text": "step3.md"
+        "text": "step3.md",
+        "answer": "step3-answer.md"
       },
       {
         "title": "Step 4",
-        "text": "step4.md"
+        "text": "step4.md",
+        "answer": "step4-answer.md"
       },
       {
         "title": "Step 5",
-        "text": "step5.md"
+        "text": "step5.md",
+        "answer": "step5-answer.md"
       },
       {
         "title": "Step 6",
-        "text": "step6.md"
+        "text": "step6.md",
+        "answer": "step6-answer.md"
       },
       {
         "title": "Step 7",
-        "text": "step7.md"
+        "text": "step7.md",
+        "answer": "step7-answer.md"
       },
       {
         "title": "Step 8",
-        "text": "step8.md"
-      },
-      {
-        "title": "Step 9",
-        "text": "step9.md"
+        "text": "step8.md",
+        "answer": "step8-answer.md"
       }
     ],
     "intro": {
