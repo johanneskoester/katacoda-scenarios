@@ -53,7 +53,8 @@
     }
   },
   "environment": {
-    "uilayout": "editor-terminal"
+    "uilayout": "editor-terminal",
+    "uisettings": "python"
   },
   "backend": {
     "imageid": "ubuntu"
